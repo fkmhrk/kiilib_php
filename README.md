@@ -28,9 +28,11 @@ Represents Bucket in Kii Cloud. Bucket consists of
 - Owner : Bucket owner. Application / Group / User can be an owner of bucket. 
 - Name : The name of bucket.
 
-KiiObject
+KiiTopic
 ---------
-Represents Object in Kii Cloud. The format is JSON with some headers. 
+Represents Topic in Kii Cloud. Topic consists of 
+- Owner : Topic owner. Application / Group / User can be an owner of topic. 
+- Name : The name of topic.
 
 APIs
 ====
