@@ -37,6 +37,35 @@ APIs
 
 Application API
 ---------------
+```
+AppAPI __construct($context)
+```
+Initialize App API
+
+```
+KiiUser login($userIdentifier, $password)
+```
+Login Kii Cloud and set Access token to context. 
+
+```
+UserAPI userAPI()
+```
+Gets userAPI
+
+```
+BucketAPI bucketAPI()
+```
+Gets bucketAPI
+
+```
+ObjectAPI objectAPI()
+```
+Gets objectAPI
+
+```
+ACLAPI aclAPI()
+```
+Gets ACL API
 
 User API
 --------
