@@ -5,6 +5,22 @@ Kii Cloud Library for PHP. This library provides APIs for Kii Cloud and data str
 
 This library supports limited APIs of ones for other platforms like Android / iOS. 
 
+PHP用Kii Cloudライブラリです。Kii Cloudに対するAPIと、データモデルを提供します。
+
+このライブラリの位置づけは、Android/iOS用SDKのサブセットです。
+
+Getting started
+===============
+I'll write samples here...
+
+
+APIs
+====
+
+Please go to https://github.com/fkmhrk/kiilib_php/wiki/References
+
+https://github.com/fkmhrk/kiilib_php/wiki/References に書いています。
+
 Entities
 ========
 
@@ -34,52 +50,7 @@ Represents Topic in Kii Cloud. Topic consists of
 - Owner : Topic owner. Application / Group / User can be an owner of topic. 
 - Name : The name of topic.
 
-APIs
-====
 
-Application API
----------------
-```
-AppAPI __construct($context)
-```
-Initialize App API
-
-```
-KiiUser login($userIdentifier, $password)
-```
-Login Kii Cloud and set Access token to context. 
-
-```
-UserAPI userAPI()
-```
-Gets userAPI
-
-```
-BucketAPI bucketAPI()
-```
-Gets bucketAPI
-
-```
-ObjectAPI objectAPI()
-```
-Gets objectAPI
-
-```
-ACLAPI aclAPI()
-```
-Gets ACL API
-
-User API
---------
-
-Bucket API
-----------
-
-Object API
-----------
-
-ACL API
--------
 
 
 
