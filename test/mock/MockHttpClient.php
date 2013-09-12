@@ -2,13 +2,16 @@
 require_once dirname(__FILE__). '/../../src/HttpClient.php';
 							  
 class MockHttpClient implements HttpClient {
+	public $urlArgs;
 	private $sendQueue;
 
 	public function __construct() {
+		$this->urlArgs = array();
 		$this->sendQueue = array();
 	}
 	
 	public function setUrl($url) {
+		array_push($this->urlArgs, $url);
 	}
 
 	public function setMethod($method) {

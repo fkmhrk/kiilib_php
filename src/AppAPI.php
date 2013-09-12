@@ -7,5 +7,6 @@ interface AppAPI {
 	public function bucketAPI();
 	public function objectAPI();
 	public function aclAPI();
+	public function topicAPI();
 }
 ?>
