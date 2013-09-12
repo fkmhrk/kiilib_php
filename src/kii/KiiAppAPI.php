@@ -4,12 +4,15 @@ require_once (dirname(__FILE__) . '/../KiiContext.php');
 require_once (dirname(__FILE__) . '/../CloudException.php');
 require_once (dirname(__FILE__) . '/../KiiUser.php');
 
+require_once (dirname(__FILE__) . '/KiiUserAPI.php');
 require_once (dirname(__FILE__) . '/KiiGroupAPI.php');
 require_once (dirname(__FILE__) . '/KiiObjectAPI.php');
 require_once (dirname(__FILE__) . '/KiiTopicAPI.php');
 							   
 class KiiAppAPI implements AppAPI {
 	private $context;
+
+	private $userAPI;
 	private $groupAPI;
 	private $objectAPI;	
 	private $topicAPI;
@@ -17,6 +20,7 @@ class KiiAppAPI implements AppAPI {
 	public function __construct($context) {
 		$this->context = $context;
 
+		$this->userAPI = new KiiUserAPI($context);
 		$this->groupAPI = new KiiGroupAPI($context);
 		$this->objectAPI = new KiiObjectAPI($context);
 		$this->topicAPI = new KiiTopicAPI($context);
@@ -50,6 +54,7 @@ class KiiAppAPI implements AppAPI {
 	
 	// APIs
 	public function userAPI() {
+		return $this->userAPI;
 	}
 
 	public function groupAPI() {

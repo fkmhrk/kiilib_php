@@ -1,0 +1,50 @@
+<?php
+require_once (dirname(__FILE__) . '/../UserAPI.php');
+require_once (dirname(__FILE__) . '/../KiiContext.php');
+require_once (dirname(__FILE__) . '/../CloudException.php');
+require_once (dirname(__FILE__) . '/../KiiUser.php');
+
+class KiiUserAPI implements UserAPI {
+	private $context;
+
+	public function __construct($context) {
+		$this->context = $context;
+	}
+	
+	public function installDevice($user, $os, $token, $development = FALSE) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			'/installations';
+		$data = array(
+					  "installationRegistrationID" => $token,
+					  "userID" => $user->getId(),
+					  "deviceType" => $this->toDeviceType($os)
+					  );
+		if ($os == UserAPI::OS_IOS) {
+			$data['development'] = $development;
+		}
+
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_POST);
+		$client->setKiiHeader($c, TRUE);
+		$client->setContentType('application/vnd.kii.InstallationCreationRequest+json');
+
+		$resp = $client->sendJson($data);
+		if ($resp->getStatus() != 201) {
+			throw new CloudException($resp->getStatus(), $resp->getAsJson());
+		}
+		$respJson = $resp->getAsJson();
+		return $respJson['installationID'];
+	}
+
+	private function toDeviceType($os) {
+		switch ($os) {
+		case UserAPI::OS_ANDROID: return 'ANDROID';
+		case UserAPI::OS_IOS: return 'IOS';
+		default: return '';
+		}
+	}
+}
+?>

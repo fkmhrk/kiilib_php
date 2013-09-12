@@ -3,10 +3,12 @@ require_once dirname(__FILE__). '/../../src/HttpClient.php';
 							  
 class MockHttpClient implements HttpClient {
 	public $urlArgs;
+	public $sendJsonArgs;
 	private $sendQueue;
 
 	public function __construct() {
 		$this->urlArgs = array();
+		$this->sendJsonArgs = array();
 		$this->sendQueue = array();
 	}
 	
@@ -27,6 +29,7 @@ class MockHttpClient implements HttpClient {
 	}
 		
 	public function sendJson($json) {
+		array_push($this->sendJsonArgs, $json);
 		return array_pop($this->sendQueue);
 	}
 
