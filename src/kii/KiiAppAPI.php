@@ -3,12 +3,17 @@ require_once (dirname(__FILE__) . '/../AppAPI.php');
 require_once (dirname(__FILE__) . '/../KiiContext.php');
 require_once (dirname(__FILE__) . '/../CloudException.php');
 require_once (dirname(__FILE__) . '/../KiiUser.php');
+
+require_once (dirname(__FILE__) . '/KiiGroupAPI.php');
 							   
 class KiiAppAPI implements AppAPI {
 	private $context;
+	private $groupAPI;
 
 	public function __construct($context) {
 		$this->context = $context;
+
+		$this->groupAPI = new KiiGroupAPI($context);
 	}
 	
 	public function login($userIdentifier, $password) {
@@ -40,6 +45,10 @@ class KiiAppAPI implements AppAPI {
 	
 	// APIs
 	public function userAPI() {
+	}
+
+	public function groupAPI() {
+		return $this->groupAPI;
 	}
 	
 	public function bucketAPI() {
