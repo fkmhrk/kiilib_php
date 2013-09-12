@@ -33,6 +33,7 @@ class KiiHttpClient implements HttpClient {
 	}
 	
 	public function setContentType($value) {
+		$this->setHeader('content-type', $value);
 	}
 
 	public function setHeader($key, $value) {
@@ -40,6 +41,9 @@ class KiiHttpClient implements HttpClient {
 	}
 
 	public function sendJson($json) {
+		$body = json_encode($json);
+		$this->req->setBody($body);
+		return $this->send();
 	}
 
 	public function send() {
@@ -47,6 +51,7 @@ class KiiHttpClient implements HttpClient {
 			$resp = $this->req->send();
 			return new KiiHttpResponse($resp->getStatus(), $resp->getBody());
 		} catch (HTTP_Request2_Exception $e) {
+			print_r($e);
 		}
 	}
 }

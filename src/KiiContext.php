@@ -1,4 +1,6 @@
 <?php
+require_once (dirname(__FILE__). '/kii/private/KiiHttpClientFactory.php');
+
 class KiiContext {
 	const SITE_US = "https://api.kii.com/api";
 	const SITE_JP = "https://api-jp.kii.com/api";
@@ -9,10 +11,13 @@ class KiiContext {
 	private $serverUrl;
 	private $token;
 
+	private $clientFactory;
+
 	public function __construct($appId, $appKey, $serverUrl) {
 		$this->appId = $appId;
 		$this->appKey = $appKey;
 		$this->serverUrl = $serverUrl;
+		$this->clientFactory = new KiiHttpClientFactory();
 	}
 
 	public function getAppId() {
@@ -33,6 +38,14 @@ class KiiContext {
 
 	public function getAccessToken() {
 		return $this->token;
+	}
+
+	public function setClientFactory($factory) {
+		$this->clientFactory = $factory;
+	}
+
+	public function getNewClient() {
+		return $this->clientFactory->newClient();
 	}
 }
 ?>
