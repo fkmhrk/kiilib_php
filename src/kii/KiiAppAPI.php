@@ -26,8 +26,7 @@ class KiiAppAPI implements AppAPI {
 		$client = $c->getNewClient();
 		$client->setUrl($url);
 		$client->setMethod(HttpClient::HTTP_POST);
-		$client->setHeader('x-kii-appid', $c->getAppId());
-		$client->setHeader('x-kii-appkey', $c->getAppKey());
+		$client->setKiiHeader($c, FALSE);
 		$client->setContentType('application/json');
 
 		$resp = $client->sendJson($body);

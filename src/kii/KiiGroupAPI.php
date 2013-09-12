@@ -25,9 +25,7 @@ class KiiGroupAPI implements GroupAPI {
 		$client = $c->getNewClient();
 		$client->setUrl($url);
 		$client->setMethod(HttpClient::HTTP_GET);
-		$client->setHeader('x-kii-appid', $c->getAppId());
-		$client->setHeader('x-kii-appkey', $c->getAppKey());
-		$client->setHeader('authorization', 'bearer '. $c->getAccessToken());
+		$client->setKiiHeader($c, TRUE);
 
 		$resp = $client->send();
 		if ($resp->getStatus() != 200) {

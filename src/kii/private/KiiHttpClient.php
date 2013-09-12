@@ -40,6 +40,15 @@ class KiiHttpClient implements HttpClient {
 		$this->req->setHeader($key, $value);
 	}
 
+	public function setKiiHeader($context, $authRequired) {
+		$this->setHeader('x-kii-appid', $context->getAppId());
+		$this->setHeader('x-kii-appkey', $context->getAppKey());
+		if ($authRequired) {
+			$this->setHeader('authorization',
+							 'bearer '. $context->getAccessToken());
+		}
+	}
+
 	public function sendJson($json) {
 		$body = json_encode($json);
 		$this->req->setBody($body);

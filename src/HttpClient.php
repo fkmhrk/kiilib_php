@@ -13,6 +13,8 @@ interface HttpClient {
 
 	public function setHeader($key, $value);
 
+	public function setKiiHeader($context, $authRequired);
+
 	public function sendJson($json);
 
 	public function send();
