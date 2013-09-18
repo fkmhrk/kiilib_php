@@ -1,6 +1,7 @@
 <?php
 class KiiUser {
 	private $id;
+	public $data;
 
 	public function __construct($id) {
 		$this->id = $id;

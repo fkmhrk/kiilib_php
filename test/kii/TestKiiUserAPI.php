@@ -137,6 +137,57 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 							$this->factory->newClient()->
 							urlArgs[0]);
 		
+	}
+
+	public function test_0100_getUser_ok() {
+		$c = $this->context;
+		$api = new KiiUserAPI($c);
+
+		$userId = 'user1234';
+		$user = new KiiUser($userId);
+
+		// set mock
+		$respBody = '{'.
+			'"userID":"deb39247-86a9-4535-9683-48a294292f67",'.
+			'"internalUserID":"234279335794589696",'.
+			'"loginName":"fkm",'.
+			'"emailAddress":"demo@fkmsoft.jp",'.
+			'"emailAddressVerified":true,'.
+			'"phoneNumber":"+818011112222",'.
+			'"phoneNumberVerified":true'.
+			'}';
+		$this->factory->newClient()->
+			addToSend(new MockResponse(200, $respBody));
+		$userInfo = $api->getUser($user);
+		
+		// assertion
+		$this->assertEquals('/users/deb39247-86a9-4535-9683-48a294292f67',
+							$userInfo->getPath());
+	}
+
+	public function test_0110_getUser_cloud_exception() {
+		$c = $this->context;
+		$api = new KiiUserAPI($c);
+
+		$userId = 'user1234';
+		$user = new KiiUser($userId);
+
+		// set mock
+		$respBody = '{'.
+			'"errorCode":"USER_NOT_FOUND",'.
+			'"message":"User 1234 was not found",'.
+			'"value":"user1234",'.
+			'"suppressed":[]'.
+			'}';
+		$this->factory->newClient()->
+			addToSend(new MockResponse(404, $respBody));
+		try {
+			$userInfo = $api->getUser($user);
+			$this->assertFail('Exception must be thrown');
+		} catch (CloudException $e) {
+			// assertion
+			$this->assertEquals(404, $e->getStatus());
+		}
 	}	
 }
 ?>

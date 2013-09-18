@@ -11,6 +11,29 @@ class KiiUserAPI implements UserAPI {
 		$this->context = $context;
 	}
 	
+	public function getUser($user) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			$user->getPath();
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_GET);
+		$client->setKiiHeader($c, TRUE);
+
+		$resp = $client->send();
+		if ($resp->getStatus() != 200) {
+			throw new CloudException($resp->getStatus(), $resp->getAsJson());
+		}
+		$respJson = $resp->getAsJson();
+		$userId = $respJson['userID'];
+
+		$info = new KiiUser($userId);
+		$info->data = $respJson;
+
+		return $info;
+	}
+	
 	public function installDevice($user, $os, $token, $development = FALSE) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
