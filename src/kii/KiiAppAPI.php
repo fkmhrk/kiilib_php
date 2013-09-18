@@ -27,12 +27,25 @@ class KiiAppAPI implements AppAPI {
 	}
 	
 	public function login($userIdentifier, $password) {
-		$c = $this->context;
-		$url = $c->getServerUrl(). '/oauth2/token';
 		$body = array(
 					  'username' => $userIdentifier,
 					  'password' => $password
 					  );
+		return $this->execLogin($body);
+	}
+
+	public function loginAsAdmin($clientId, $clientSecret) {
+		$body = array(
+					  'client_id' => $clientId,
+					  'client_secret' => $clientSecret
+					  );
+		return $this->execLogin($body);
+	}
+
+	private function execLogin($body) {
+		$c = $this->context;
+		$url = $c->getServerUrl(). '/oauth2/token';
+		
 		$client = $c->getNewClient();
 		$client->setUrl($url);
 		$client->setMethod(HttpClient::HTTP_POST);
@@ -49,7 +62,7 @@ class KiiAppAPI implements AppAPI {
 		$token = $respJson['access_token'];
 		$c->setAccessToken($token);
 
-		return new Kiiuser($userId);
+		return new Kiiuser($userId);		
 	}
 	
 	// APIs
