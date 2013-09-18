@@ -16,6 +16,36 @@ class KiiUserAPI implements UserAPI {
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
 			$user->getPath();
+		return $this->execGet($url);
+	}
+
+	public function findByUsername($username) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			'/users/LOGIN_NAME:'. $username;
+		return $this->execGet($url);
+	}
+
+	public function findByEmail($email) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			'/users/EMAIL:'. $email;
+		return $this->execGet($url);
+	}
+
+	public function findByPhone($phone) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			'/users/PHONE:'. $phone;
+		return $this->execGet($url);
+	}
+
+	private function execGet($url) {
+		$c = $this->context;
+		
 		$client = $c->getNewClient();
 		$client->setUrl($url);
 		$client->setMethod(HttpClient::HTTP_GET);
@@ -31,7 +61,7 @@ class KiiUserAPI implements UserAPI {
 		$info = new KiiUser($userId);
 		$info->data = $respJson;
 
-		return $info;
+		return $info;		
 	}
 	
 	public function installDevice($user, $os, $token, $development = FALSE) {
