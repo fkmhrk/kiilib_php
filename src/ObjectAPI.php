@@ -8,6 +8,8 @@ interface ObjectAPI {
 	public function delete($object);
 
 	public function updateBody($object, $contentType, $data);
+
+	public function downloadBody($object, $fp);
 }
 
 ?>

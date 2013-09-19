@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__). '/../../HttpClient.php';
 require_once dirname(__FILE__). '/KiiHttpResponse.php';
+require_once (dirname(__FILE__). '/KiiHttpClientObserver.php');
 							  
 require_once 'HTTP/Request2.php';
 class KiiHttpClient implements HttpClient {
@@ -51,6 +52,11 @@ class KiiHttpClient implements HttpClient {
 
 	public function sendFile($fp) {
 		$this->req->setBody($fp);
+		return $this->send();
+	}
+
+	public function sendForDownload($fp) {
+		$this->req->attach(new KiiHttpClientObserver($fp));
 		return $this->send();
 	}
 		
