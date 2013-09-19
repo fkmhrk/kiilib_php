@@ -49,6 +49,11 @@ class KiiHttpClient implements HttpClient {
 		}
 	}
 
+	public function sendFile($fp) {
+		$this->req->setBody($fp);
+		return $this->send();
+	}
+		
 	public function sendJson($json) {
 		$body = json_encode($json);
 		$this->req->setBody($body);

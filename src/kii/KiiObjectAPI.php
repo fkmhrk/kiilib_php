@@ -73,6 +73,29 @@ class KiiObjectAPI implements ObjectAPI {
 			throw new CloudException($resp->getStatus(), $resp->getAsJson());
 		}
 	}
+
+	public function updateBody($object, $contentType, $data) {	
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			$object->getPath().
+			'/body';
+
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_PUT);
+		$client->setKiiHeader($c, TRUE);
+		$client->setContentType($contentType);
+
+		$resp = $client->sendFile($data);
+		if ($resp->getStatus() == 200) {
+			$respJson = $resp->getAsJson();
+			return $object;
+		} else if ($resp->getStatus() == 201) {
+			return $object;
+		}
+		throw new CloudException($resp->getStatus(), $resp->getAsJson());
+	}	
 }
 
 ?>

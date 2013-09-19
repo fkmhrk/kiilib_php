@@ -15,6 +15,8 @@ interface HttpClient {
 
 	public function setKiiHeader($context, $authRequired);
 
+	public function sendFile($fp);
+	
 	public function sendJson($json);
 
 	public function send();

@@ -27,7 +27,11 @@ class MockHttpClient implements HttpClient {
 
 	public function setKiiHeader($context, $authRequired) {
 	}
-		
+
+	public function sendFile($fp) {
+		return array_pop($this->sendQueue);		
+	}
+	
 	public function sendJson($json) {
 		array_push($this->sendJsonArgs, $json);
 		return array_pop($this->sendQueue);

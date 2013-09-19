@@ -141,5 +141,40 @@ class TestKiiObjectAPI extends PHPUnit_Framework_TestCase{
 			$this->assertEquals(404, $e->getStatus());
 		}
 	}
+
+	public function test_0300_updateBody_ok() {
+		$c = $this->context;
+		$api = new KiiObjectAPI($c);
+
+		$userId = 'user1234';
+		$user = new KiiUser($userId);
+		$bucket = new KiiBucket($user, 'test');
+
+		$objectId = 'obj1234';
+		$data = array(
+					  "name" => "fkm",
+					  "score" => 120
+					  );		
+		$object = new KiiObject($bucket, $objectId, $data);
+		// upload body
+		$fp = fopen('php://memory', 'rw');
+		fwrite($fp, 'test');
+		rewind($fp);
+		
+		// set mock
+		$respBody = ''; 
+		$this->factory->newClient()->
+			addToSend(new MockResponse(200, $respBody));
+		$updated = $api->updateBody($object, 'text/plain', $fp);
+		fclose($fp);
+		
+		// assertion
+		$this->assertEquals('obj1234',
+							$updated->getId());
+		$json = $updated->data;
+		$this->assertEquals(2, count($json));
+		$this->assertEquals('fkm', $json['name']);
+		$this->assertEquals(120, $json['score']);
+	}	
 }
 ?>
