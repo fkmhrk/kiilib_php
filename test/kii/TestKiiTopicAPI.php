@@ -1,4 +1,5 @@
 <?php
+require_once (dirname(__FILE__) . '/../../src/KiiUser.php');
 require_once (dirname(__FILE__) . '/../../src/KiiGroup.php');
 require_once (dirname(__FILE__) . '/../../src/kii/KiiTopicAPI.php');
 require_once (dirname(__FILE__) . '/../mock/MockClientFactory.php');
@@ -73,6 +74,55 @@ class TestKiiTopicAPI extends PHPUnit_Framework_TestCase{
 			$this->assertEquals(404, $e->getStatus());
 		}
 	}
-	
+
+	public function test_0100_create_ok() {
+		$c = $this->context;
+		$api = new KiiTopicAPI($c);
+
+		$userId = 'user1234';
+		$topicName = 'myTopic';
+		$topic = new KiiTopic(new KiiUser($userId), $topicName);
+
+		// set mock
+		$respBody = '';
+		$this->factory->newClient()->
+			addToSend(new MockResponse(204, $respBody));
+		$api->create($topic);
+		
+		// assertion
+		$this->assertEquals('https://api.kii.com/api/apps/appId/users/user1234/topics/myTopic',
+							$this->factory->newClient()->urlArgs[0]);
+	}
+
+	public function test_0101_create_cloud_exception() {
+		$c = $this->context;
+		$api = new KiiTopicAPI($c);
+
+		$userId = 'user1234';
+		$topicName = 'myTopic';
+		$topic = new KiiTopic(new KiiUser($userId), $topicName);
+
+		// set mock
+		$respBody = '{'.
+			'"errorCode":"TOPIC_ALREADY_EXISTS",'.
+			'"message":"The topic already exists",'.
+			'"objectScope":['.
+			'{'.
+            '"appID":"1a460467",'.
+            '"userID":"user1234",'.
+            '"type":"APP_AND_USER"'.
+			'}],'.
+			'"topicID":"myTopic",'.
+			'"suppressed":[]'.
+			'}';
+		$this->factory->newClient()->
+			addToSend(new MockResponse(409, $respBody));
+		try {
+			$api->create($topic);
+			$this->assertFail('Exception must be thrown');			
+		} catch (CloudException $e) {
+			$this->assertEquals(409, $e->getStatus());
+		}
+	}	
 }
 ?>

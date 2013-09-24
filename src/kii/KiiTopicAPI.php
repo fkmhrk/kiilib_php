@@ -11,6 +11,22 @@ class KiiTopicAPI implements TopicAPI {
 	public function __construct($context) {
 		$this->context = $context;
 	}
+
+	public function create($topic) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			$topic->getPath();
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_PUT);
+		$client->setKiiHeader($c, TRUE);
+
+		$resp = $client->send();
+		if ($resp->getStatus() != 204) {
+			throw new CloudException($resp->getStatus(), $resp->getAsJson());
+		}			
+	}
 	
 	public function sendMessage($topic, $message) {
 		$c = $this->context;
