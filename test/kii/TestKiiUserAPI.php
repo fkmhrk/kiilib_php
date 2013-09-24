@@ -1,5 +1,6 @@
 <?php
 require_once (dirname(__FILE__) . '/../../src/kii/KiiUserAPI.php');
+require_once (dirname(__FILE__) . '/../../src/KiiTopic.php');
 require_once (dirname(__FILE__) . '/../mock/MockClientFactory.php');
 
 class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
@@ -330,5 +331,61 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			$this->assertEquals(404, $e->getStatus());			
 		}
 	}
+
+	public function test_0500_subscribe_topic_ok() {
+		$c = $this->context;
+		$api = new KiiUserAPI($c);
+
+		$userId = 'user1234';
+		$user = new KiiUser($userId);
+
+		$topicName = 'myTopic';
+		$topic = new KiiTopic($user, $topicName);
+		
+		// set mock
+		$respBody = '';
+		$this->factory->newClient()->
+			addToSend(new MockResponse(204, $respBody));
+		$api->subscribe($user, $topic);
+		
+		// assertion
+		$this->assertEquals('https://api.kii.com/api/apps/appId/users/user1234/topics/myTopic/push/subscriptions/users/user1234',
+							$this->factory->newClient()->urlArgs[0]);
+	}
+
+	public function test_0501_subscribe_topic_cloud_exception() {
+		$c = $this->context;
+		$api = new KiiUserAPI($c);
+
+		$userId = 'user1234';
+		$user = new KiiUser($userId);
+
+		$topicName = 'myTopic';
+		$topic = new KiiTopic($user, $topicName);
+		
+		// set mock
+		$respBody = '{'.
+			'"errorCode":"PUSH_SUBSCRIPTION_ALREADY_EXISTS",'.
+			'"message":"Already exists a push subscription for: objectScope 1a460467/deb39247-86a9-4535-9683-48a294292f67 | topic: test | subject U:deb39247-86a9-4535-9683-48a294292f67@1a460467",'.
+			'"objectScope":['.
+			'{'.
+            '"appID":"1a460467",'.
+            '"userID":"user1234",'.
+            '"type":"APP_AND_USER"'.
+			'}],'.
+			'"topicID":"myTopic",'.
+			'"subject":"U:user1234",'.
+			'"suppressed":[]'.
+			'}';
+		$this->factory->newClient()->
+			addToSend(new MockResponse(409, $respBody));
+		try {
+			$api->subscribe($user, $topic);
+			$this->assertFail('Exception must be thrown');			
+		} catch (CloudException $e) {
+			// assertion
+			$this->assertEquals(409, $e->getStatus());			
+		}
+	}	
 }
 ?>

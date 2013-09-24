@@ -99,5 +99,24 @@ class KiiUserAPI implements UserAPI {
 		default: return '';
 		}
 	}
+
+	public function subscribe($user, $target) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			$target->getPath().
+			'/push/subscriptions'.
+			$user->getPath();
+
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_PUT);
+		$client->setKiiHeader($c, TRUE);
+
+		$resp = $client->send();
+		if ($resp->getStatus() != 204) {
+			throw new CloudException($resp->getStatus(), $resp->getAsJson());
+		}
+	}
 }
 ?>

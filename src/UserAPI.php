@@ -13,5 +13,7 @@ interface UserAPI {
 	public function findByPhone($phone);
 	
 	public function installDevice($user, $os, $token, $development = FALSE);
+
+	public function subscribe($user, $target);
 }
 ?>
