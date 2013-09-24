@@ -6,6 +6,7 @@ require_once (dirname(__FILE__) . '/../KiiUser.php');
 
 require_once (dirname(__FILE__) . '/KiiUserAPI.php');
 require_once (dirname(__FILE__) . '/KiiGroupAPI.php');
+require_once (dirname(__FILE__) . '/KiiBucketAPI.php');
 require_once (dirname(__FILE__) . '/KiiObjectAPI.php');
 require_once (dirname(__FILE__) . '/KiiTopicAPI.php');
 							   
@@ -14,6 +15,7 @@ class KiiAppAPI implements AppAPI {
 
 	private $userAPI;
 	private $groupAPI;
+	private $bucketAPI;
 	private $objectAPI;	
 	private $topicAPI;
 
@@ -22,6 +24,7 @@ class KiiAppAPI implements AppAPI {
 
 		$this->userAPI = new KiiUserAPI($context);
 		$this->groupAPI = new KiiGroupAPI($context);
+		$this->bucketAPI = new KiiBucketAPI($context);
 		$this->objectAPI = new KiiObjectAPI($context);
 		$this->topicAPI = new KiiTopicAPI($context);
 	}
@@ -75,6 +78,7 @@ class KiiAppAPI implements AppAPI {
 	}
 	
 	public function bucketAPI() {
+		return $this->bucketAPI;
 	}
 	
 	public function objectAPI(){
