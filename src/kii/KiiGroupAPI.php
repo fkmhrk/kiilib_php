@@ -2,7 +2,6 @@
 require_once (dirname(__FILE__) . '/../GroupAPI.php');
 require_once (dirname(__FILE__) . '/../KiiContext.php');
 require_once (dirname(__FILE__) . '/../CloudException.php');
-require_once (dirname(__FILE__) . '/../KiiUser.php');
 require_once (dirname(__FILE__) . '/../KiiGroup.php');
 
 class KiiGroupAPI implements GroupAPI {
@@ -12,7 +11,7 @@ class KiiGroupAPI implements GroupAPI {
 		$this->context = $context;
 	}
 	
-	public function getJoinedGroups($user) {
+	public function getJoinedGroups(KiiUser $user) {
 		return $this->getGroups($user, 'is_member');
 	}
 

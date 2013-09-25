@@ -1,10 +1,10 @@
 <?php
-
+require_once (dirname(__FILE__) . '/KiiUser.php');
 interface UserAPI {
 	const OS_ANDROID = 1;
 	const OS_IOS = 2;
 
-	public function getUser($user);
+	public function getUser(KiiUser $user);
 	
 	public function findByUsername($username);
 
@@ -12,8 +12,8 @@ interface UserAPI {
 
 	public function findByPhone($phone);
 	
-	public function installDevice($user, $os, $token, $development = FALSE);
+	public function installDevice(KiiUser $user, $os, $token, $development = FALSE);
 
-	public function subscribe($user, $target);
+	public function subscribe(KiiUser $user, $target);
 }
 ?>

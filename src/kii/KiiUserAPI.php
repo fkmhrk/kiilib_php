@@ -2,7 +2,6 @@
 require_once (dirname(__FILE__) . '/../UserAPI.php');
 require_once (dirname(__FILE__) . '/../KiiContext.php');
 require_once (dirname(__FILE__) . '/../CloudException.php');
-require_once (dirname(__FILE__) . '/../KiiUser.php');
 
 class KiiUserAPI implements UserAPI {
 	private $context;
@@ -11,7 +10,7 @@ class KiiUserAPI implements UserAPI {
 		$this->context = $context;
 	}
 	
-	public function getUser($user) {
+	public function getUser(KiiUser $user) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -64,7 +63,7 @@ class KiiUserAPI implements UserAPI {
 		return $info;		
 	}
 	
-	public function installDevice($user, $os, $token, $development = FALSE) {
+	public function installDevice(KiiUser $user, $os, $token, $development = FALSE) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -100,7 +99,7 @@ class KiiUserAPI implements UserAPI {
 		}
 	}
 
-	public function subscribe($user, $target) {
+	public function subscribe(KiiUser $user, $target) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().

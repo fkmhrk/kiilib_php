@@ -2,8 +2,6 @@
 require_once (dirname(__FILE__) . '/../TopicAPI.php');
 require_once (dirname(__FILE__) . '/../KiiContext.php');
 require_once (dirname(__FILE__) . '/../CloudException.php');
-require_once (dirname(__FILE__) . '/../KiiTopic.php');
-require_once (dirname(__FILE__) . '/../KiiTopicMessage.php');
 
 class KiiTopicAPI implements TopicAPI {
 	private $context;
@@ -12,7 +10,7 @@ class KiiTopicAPI implements TopicAPI {
 		$this->context = $context;
 	}
 
-	public function create($topic) {
+	public function create(KiiTopic $topic) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -28,7 +26,7 @@ class KiiTopicAPI implements TopicAPI {
 		}			
 	}
 	
-	public function sendMessage($topic, $message) {
+	public function sendMessage(KiiTopic $topic, KiiTopicMessage $message) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().

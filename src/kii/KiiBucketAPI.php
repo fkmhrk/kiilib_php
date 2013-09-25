@@ -12,7 +12,7 @@ class KiiBucketAPI implements BucketAPI {
 		$this->context = $context;
 	}
 
-	public function query($bucket, $condition) {
+	public function query(KiiBucket $bucket, KiiCondition $condition) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
