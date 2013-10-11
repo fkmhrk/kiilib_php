@@ -91,6 +91,24 @@ class KiiUserAPI implements UserAPI {
 		return $respJson['installationID'];
 	}
 
+	public function uninstallDevice($os, $token) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			'/installations/'. $this->toDeviceType($os).
+			':'. $token;
+
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_DELETE);
+		$client->setKiiHeader($c, TRUE);
+
+		$resp = $client->send();
+		if ($resp->getStatus() != 204) {
+			throw new CloudException($resp->getStatus(), $resp->getAsJson());
+		}
+	}
+	
 	private function toDeviceType($os) {
 		switch ($os) {
 		case UserAPI::OS_ANDROID: return 'ANDROID';

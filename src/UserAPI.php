@@ -14,6 +14,8 @@ interface UserAPI {
 	
 	public function installDevice(KiiUser $user, $os, $token, $development = FALSE);
 
+	public function uninstallDevice($os, $token);
+
 	public function subscribe(KiiUser $user, $target);
 }
 ?>

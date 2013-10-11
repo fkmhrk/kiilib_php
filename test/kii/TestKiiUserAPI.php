@@ -386,6 +386,62 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			// assertion
 			$this->assertEquals(409, $e->getStatus());			
 		}
+	}
+	
+	public function test_0600_uninstall_Android() {
+		$c = $this->context;
+		$api = new KiiUserAPI($c);
+
+		// set mock
+		$deviceToken = 'token1234';
+		$respBody = '';
+		
+		$this->factory->newClient()->
+			addToSend(new MockResponse(204, $respBody));
+		$api->uninstallDevice(UserAPI::OS_ANDROID, $deviceToken);
+		
+		// assertion
+		$this->assertEquals('https://api.kii.com/api/apps/appId/installations/ANDROID:token1234',
+							$this->factory->newClient()->
+							urlArgs[0]);
+	}
+
+	public function test_0601_uninstall_iOS() {
+		$c = $this->context;
+		$api = new KiiUserAPI($c);
+
+		// set mock
+		$deviceToken = 'token1234';
+		$respBody = '';
+		
+		$this->factory->newClient()->
+			addToSend(new MockResponse(204, $respBody));
+		$api->uninstallDevice(UserAPI::OS_IOS, $deviceToken);
+		
+		// assertion
+		$this->assertEquals('https://api.kii.com/api/apps/appId/installations/IOS:token1234',
+							$this->factory->newClient()->
+							urlArgs[0]);
+	}
+
+	public function test_0610_uninstall_cloud_exception() {
+		$c = $this->context;
+		$api = new KiiUserAPI($c);
+
+		// set mock
+		$deviceToken = 'token1234';
+		$respBody = '{}'; // add later
+		
+		$this->factory->newClient()->
+			addToSend(new MockResponse(400, $respBody));
+		
+		try {
+			$api->uninstallDevice(UserAPI::OS_ANDROID, $deviceToken);
+			$this->assertFail('Exception must be thrown');			
+		} catch (CloudException $e) {
+			// assertion
+			$this->assertEquals(400, $e->getStatus());
+		}
 	}	
 }
 ?>
