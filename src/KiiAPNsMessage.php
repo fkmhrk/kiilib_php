@@ -9,6 +9,10 @@ class KiiAPNsMessage {
 		$this->enable = TRUE;
 	}
 
+	public function setEnabled($value) {
+		$this->enable = $value;
+	}	
+
 	public function toJson() {
 		$json = array(
 					  "enabled" => $this->enable
