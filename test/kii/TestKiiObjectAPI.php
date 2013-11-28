@@ -85,6 +85,41 @@ class TestKiiObjectAPI extends PHPUnit_Framework_TestCase{
 		$this->assertEquals(255, $json['score']);
 	}
 
+	public function test_0200_updateIfUnmodified_ok() {
+		$c = $this->context;
+		$api = new KiiObjectAPI($c);
+
+		$userId = 'user1234';
+		$user = new KiiUser($userId);
+		$bucket = new KiiBucket($user, 'test');
+
+		$objectId = 'obj1234';
+		$data = array(
+					  "name" => "fkm",
+					  "score" => 120
+					  );		
+		$object = new KiiObject($bucket, $objectId, $data);
+		// update field
+		$object->data['score'] = 255;
+		
+		// set mock
+		$respBody = '{'. 
+			'"modifiedAt":1337039448517'.
+			'}';
+		$this->factory->newClient()->
+			addToSend(new MockResponse(200, array('etag' => '2'), $respBody));
+		$updated = $api->updateIfUnmodified($object);
+		
+		// assertion
+		$this->assertEquals('obj1234',
+							$updated->getId());
+		$this->assertEquals("2", $updated->version);		
+		$json = $updated->data;
+		$this->assertEquals(2, count($json));
+		$this->assertEquals('fkm', $json['name']);
+		$this->assertEquals(255, $json['score']);
+	}	
+
 	public function test_0200_delete_ok() {
 		$c = $this->context;
 		$api = new KiiObjectAPI($c);
