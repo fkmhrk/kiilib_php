@@ -8,7 +8,7 @@ $appApi = new KiiAppAPI($context);
 $api = $appApi->objectAPI();
 
 try {
-	$user = $appApi->login('fkm', '123456');
+	$user = $appApi->login('fkm0000', '123456');
 
 	$bucket = new KiiBucket($user, 'post');
 	$data = array(
@@ -20,6 +20,24 @@ try {
 	$obj->data['score'] = 120;
 	$updated = $api->update($obj);
 	print_r($updated);
+
+	// update IfUnmodified
+	echo "Update If object is unmodified on the cloud\n";
+	$updated->data['score'] = 200;
+	$updated = $api->updateIfUnmodified($updated);
+	print_r($updated);
+
+	// if version is not matched, API call will be failed.
+	$updated->data['score'] = 300;
+	$updated->version = "1"; // old version
+	try {
+		$updated = $api->updateIfUnmodified($updated);
+		echo "Updated????\n";
+	} catch (CloudException $e) {
+		print_r($e);
+	}
+
+	
 } catch (CloudException $e) {
 	echo 'failed to call Kii API '. $e->getStatus();
 	print_r($e->getResponse());
