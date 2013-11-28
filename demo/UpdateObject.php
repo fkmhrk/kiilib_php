@@ -8,7 +8,7 @@ $appApi = new KiiAppAPI($context);
 $api = $appApi->objectAPI();
 
 try {
-	$user = $appApi->login('fkm0000', '123456');
+	$user = $appApi->login('fkm', '123456');
 
 	$bucket = new KiiBucket($user, 'post');
 	$data = array(
