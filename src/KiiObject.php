@@ -4,6 +4,7 @@ class KiiObject {
 	private $bucket;
 	private $id;
 	public $data;
+	public $version;
 
 	public function __construct($bucket, $id, $data) {
 		$this->bucket = $bucket;

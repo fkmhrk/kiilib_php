@@ -37,7 +37,7 @@ class TestKiiGroupAPI extends PHPUnit_Framework_TestCase{
 			'}]'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));
+			addToSend(new MockResponse(200, null, $respBody));
 		$result = $api->getJoinedGroups($user);
 		// assertion
 		$this->assertEquals(2, count($result));
@@ -63,7 +63,7 @@ class TestKiiGroupAPI extends PHPUnit_Framework_TestCase{
 			'"value":"user1234",'.
 			'"suppressed":[ ]}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(404, $respBody));
+			addToSend(new MockResponse(404, null, $respBody));
 		try {
 			$result = $api->getJoinedGroups($user);
 			$this->assertFail('exception must be thrown');

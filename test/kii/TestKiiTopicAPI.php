@@ -34,7 +34,7 @@ class TestKiiTopicAPI extends PHPUnit_Framework_TestCase{
 			'"pushMessageID":"c91d5a3b-3ae1-45ea-9f2f-1265ddd080ce"'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(201, $respBody));
+			addToSend(new MockResponse(201, null, $respBody));
 		$result = $api->sendMessage($topic, $message);
 		
 		// assertion
@@ -66,7 +66,7 @@ class TestKiiTopicAPI extends PHPUnit_Framework_TestCase{
 			'"topicID":"myTopic",'.
 			'"suppressed": [ ]}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(404, $respBody));
+			addToSend(new MockResponse(404, null, $respBody));
 		try {
 			$result = $api->sendMessage($topic, $message);
 			$this->assertFail('Exception must be thrown');
@@ -86,7 +86,7 @@ class TestKiiTopicAPI extends PHPUnit_Framework_TestCase{
 		// set mock
 		$respBody = '';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(204, $respBody));
+			addToSend(new MockResponse(204, null, $respBody));
 		$api->create($topic);
 		
 		// assertion
@@ -116,7 +116,7 @@ class TestKiiTopicAPI extends PHPUnit_Framework_TestCase{
 			'"suppressed":[]'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(409, $respBody));
+			addToSend(new MockResponse(409, null, $respBody));
 		try {
 			$api->create($topic);
 			$this->assertFail('Exception must be thrown');			

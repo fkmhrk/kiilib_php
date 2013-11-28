@@ -69,7 +69,9 @@ class KiiHttpClient implements HttpClient {
 	public function send() {
 		try {
 			$resp = $this->req->send();
-			return new KiiHttpResponse($resp->getStatus(), $resp->getBody());
+			return new KiiHttpResponse($resp->getStatus(),
+									   $resp->getHeader(),
+									   $resp->getBody());
 		} catch (HTTP_Request2_Exception $e) {
 			print_r($e);
 		}

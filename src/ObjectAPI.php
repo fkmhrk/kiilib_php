@@ -6,6 +6,8 @@ interface ObjectAPI {
 	
 	public function update(KiiObject $object);
 
+	public function updateIfUnmodified(KiiObject $object);
+
 	public function delete(KiiObject $object);
 
 	public function updateBody(KiiObject $object, $contentType, $data);

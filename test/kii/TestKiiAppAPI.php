@@ -24,7 +24,7 @@ class TestKiiAppAPI extends PHPUnit_Framework_TestCase{
 			'"access_token":"a8d808e6-495d-4968-9c54-27979369c9c8",'.
 			'"expires_in":9223372036854775}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));
+			addToSend(new MockResponse(200, null, $respBody));
 
 		// call API
 		$user = $api->login('user1234', '123456');
@@ -48,7 +48,7 @@ class TestKiiAppAPI extends PHPUnit_Framework_TestCase{
 			'"error_description":"The user was not found or a wrong password was provided",'.
 			'"error":"invalid_grant"}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(400, $respBody));
+			addToSend(new MockResponse(400, null, $respBody));
 
 		// call API
 		try {
@@ -67,7 +67,7 @@ class TestKiiAppAPI extends PHPUnit_Framework_TestCase{
 			'"access_token":"a8d808e6-495d-4968-9c54-27979369c9c8",'.
 			'"expires_in":9223372036854775}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));
+			addToSend(new MockResponse(200, null, $respBody));
 
 		// call API
 		$user = $api->loginAsAdmin('ID', 'Secret');
@@ -91,7 +91,7 @@ class TestKiiAppAPI extends PHPUnit_Framework_TestCase{
 			'"error_description":"The user was not found or a wrong password was provided",'.
 			'"error":"invalid_grant"}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(400, $respBody));
+			addToSend(new MockResponse(400, null, $respBody));
 
 		// call API
 		try {

@@ -30,7 +30,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"installationID":"2vm010uirx8c38xtpgufpie19"'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(201, $respBody));
+			addToSend(new MockResponse(201, null, $respBody));
 		$installationId = $api->installDevice($user, UserAPI::OS_ANDROID, $deviceToken);
 		
 		// assertion
@@ -60,7 +60,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"installationID":"2vm010uirx8c38xtpgufpie19"'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(201, $respBody));
+			addToSend(new MockResponse(201, null, $respBody));
 		$installationId = $api->installDevice($user, UserAPI::OS_IOS, $deviceToken);
 		
 		// assertion
@@ -91,7 +91,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"installationID":"2vm010uirx8c38xtpgufpie19"'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(201, $respBody));
+			addToSend(new MockResponse(201, null, $respBody));
 		$installationId = $api->installDevice($user, UserAPI::OS_IOS, $deviceToken, TRUE);
 		
 		// assertion
@@ -122,7 +122,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"installationID":"2vm010uirx8c38xtpgufpie19"'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(201, $respBody));
+			addToSend(new MockResponse(201, null, $respBody));
 		$installationId = $api->installDevice($user, UserAPI::OS_IOS, $deviceToken, FALSE);
 		
 		// assertion
@@ -158,7 +158,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"phoneNumberVerified":true'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));
+			addToSend(new MockResponse(200, null, $respBody));
 		$userInfo = $api->getUser($user);
 		
 		// assertion
@@ -181,7 +181,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"suppressed":[]'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(404, $respBody));
+			addToSend(new MockResponse(404, null, $respBody));
 		try {
 			$userInfo = $api->getUser($user);
 			$this->assertFail('Exception must be thrown');
@@ -206,7 +206,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"phoneNumberVerified":true'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));
+			addToSend(new MockResponse(200, null, $respBody));
 		$userInfo = $api->findByUsername('name1234');
 		
 		// assertion
@@ -228,7 +228,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"suppressed":[]'.
 			'}';		
 		$this->factory->newClient()->
-			addToSend(new MockResponse(404, $respBody));
+			addToSend(new MockResponse(404, null, $respBody));
 		try {
 			$userInfo = $api->findByUsername('name1234');
 			$this->assertFail('Exception must be thrown');
@@ -253,7 +253,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"phoneNumberVerified":true'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));
+			addToSend(new MockResponse(200, null, $respBody));
 		$userInfo = $api->findByEmail('email1234');
 		
 		// assertion
@@ -275,7 +275,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"suppressed":[]'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(404, $respBody));
+			addToSend(new MockResponse(404, null, $respBody));
 		try {
 			$userInfo = $api->findByEmail('email1234');
 			$this->assertFail('Exception must be thrown');
@@ -300,7 +300,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"phoneNumberVerified":true'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));
+			addToSend(new MockResponse(200, null, $respBody));
 		$userInfo = $api->findByPhone('phone1234');
 		
 		// assertion
@@ -322,7 +322,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"suppressed":[]'.
 			'}';		
 		$this->factory->newClient()->
-			addToSend(new MockResponse(404, $respBody));
+			addToSend(new MockResponse(404, null, $respBody));
 		try {
 			$userInfo = $api->findByPhone('phone1234');
 			$this->assertFail('Exception must be thrown');
@@ -345,7 +345,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 		// set mock
 		$respBody = '';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(204, $respBody));
+			addToSend(new MockResponse(204, null, $respBody));
 		$api->subscribe($user, $topic);
 		
 		// assertion
@@ -378,7 +378,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 			'"suppressed":[]'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(409, $respBody));
+			addToSend(new MockResponse(409, null, $respBody));
 		try {
 			$api->subscribe($user, $topic);
 			$this->assertFail('Exception must be thrown');			
@@ -397,7 +397,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 		$respBody = '';
 		
 		$this->factory->newClient()->
-			addToSend(new MockResponse(204, $respBody));
+			addToSend(new MockResponse(204, null, $respBody));
 		$api->uninstallDevice(UserAPI::OS_ANDROID, $deviceToken);
 		
 		// assertion
@@ -415,7 +415,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 		$respBody = '';
 		
 		$this->factory->newClient()->
-			addToSend(new MockResponse(204, $respBody));
+			addToSend(new MockResponse(204, null, $respBody));
 		$api->uninstallDevice(UserAPI::OS_IOS, $deviceToken);
 		
 		// assertion
@@ -433,7 +433,7 @@ class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
 		$respBody = '{}'; // add later
 		
 		$this->factory->newClient()->
-			addToSend(new MockResponse(400, $respBody));
+			addToSend(new MockResponse(400, null, $respBody));
 		
 		try {
 			$api->uninstallDevice(UserAPI::OS_ANDROID, $deviceToken);

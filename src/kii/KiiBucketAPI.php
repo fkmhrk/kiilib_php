@@ -40,7 +40,11 @@ class KiiBucketAPI implements BucketAPI {
 		$result = array();
 		foreach ($respArray as $item) {
 			$id = $item['_id'];
-			$result[]= new KiiObject($bucket, $id, $item);
+			$version = $item['_version'];
+
+			$object = new KiiObject($bucket, $id, $item);
+			$object->version = $version;
+			$result[]= $object;
 		}
 		
 		return $result;
