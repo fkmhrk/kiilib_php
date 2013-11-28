@@ -31,13 +31,13 @@ class TestKiiBucketAPI extends PHPUnit_Framework_TestCase{
 			'"queryDescription":"WHERE ( ( name = \'John Doe\' ) OR ( age = 30 ) )",'.
 			'"results":['.
 			'{"_id":"72d4f64d-01ab-4722-9330-70e33ae2bfbb","name":"John Doe","age":30,'.
-			'"_created":1334505473494,"_modified":1334505473494,"_owner":"789399f7-7552-47a8-a524-b9119056edd9"},'.
+			'"_created":1334505473494,"_modified":1334505473494,"_owner":"789399f7-7552-47a8-a524-b9119056edd9","_version":"1"},'.
 			'{"_id":"af2a9367-01cd-4edc-af6d-40c9607e4410","name":"John Doe","age":45,'.
-			'"_created":1334505481261,"_modified":1334505481261,"_owner":"789399f7-7552-47a8-a524-b9119056edd9"}'.
+			'"_created":1334505481261,"_modified":1334505481261,"_owner":"789399f7-7552-47a8-a524-b9119056edd9","_version":"1"}'.
 			']'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));		
+			addToSend(new MockResponse(200, null, $respBody));		
 		$result = $api->query($bucket, $condition);
 
 		// assertion
@@ -65,11 +65,11 @@ class TestKiiBucketAPI extends PHPUnit_Framework_TestCase{
 			'"nextPaginationKey":"200/2",'.
 			'"results":['.
 			'{"_id":"72d4f64d-01ab-4722-9330-70e33ae2bfbb","name":"John Doe","age":30,'.
-			'"_created":1334505473494,"_modified":1334505473494,"_owner":"789399f7-7552-47a8-a524-b9119056edd9"}'.
+			'"_created":1334505473494,"_modified":1334505473494,"_owner":"789399f7-7552-47a8-a524-b9119056edd9","_version":"1"}'.
 			']'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(200, $respBody));		
+			addToSend(new MockResponse(200, null, $respBody));		
 		$result = $api->query($bucket, $condition);
 
 		// assertion
@@ -97,7 +97,7 @@ class TestKiiBucketAPI extends PHPUnit_Framework_TestCase{
 			'"suppressed":[]'.
 			'}';
 		$this->factory->newClient()->
-			addToSend(new MockResponse(404, $respBody));
+			addToSend(new MockResponse(404, null, $respBody));
 		try {
 			$api->query($bucket, $condition);
 			$this->assertFail('Exception must be thrown');

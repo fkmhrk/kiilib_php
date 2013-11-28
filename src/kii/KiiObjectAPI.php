@@ -28,9 +28,12 @@ class KiiObjectAPI implements ObjectAPI {
 			throw new CloudException($resp->getStatus(), $resp->getAsJson());
 		}
 		$respJson = $resp->getAsJson();
+		$version = $resp->getAllHeaders()['etag'];
 		$id = $respJson['objectID'];
-		
-		return new KiiObject($bucket, $id, $data);
+
+		$kiiobj = new KiiObject($bucket, $id, $data);
+		$kiiobj->version = $version;
+		return $kiiobj;
 	}
 
 	public function update(KiiObject $object) {
@@ -48,13 +51,44 @@ class KiiObjectAPI implements ObjectAPI {
 		$resp = $client->sendJson($object->data);
 		if ($resp->getStatus() == 200) {
 			$respJson = $resp->getAsJson();
+			$version = $resp->getAllHeaders()['etag'];
+			$object->version = $version;
 			return $object;
 		} else if ($resp->getStatus() == 201) {
+			$version = $resp->getAllHeaders()['etag'];
+			$object->version = $version;
 			return $object;
 		}
 		throw new CloudException($resp->getStatus(), $resp->getAsJson());
 	}
 
+	public function updateIfUnmodified(KiiObject $object) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			$object->getPath();
+
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_PUT);
+		$client->setKiiHeader($c, TRUE);
+		$client->setHeader('If-Match', $object->version);
+		$client->setContentType('application/json');
+
+		$resp = $client->sendJson($object->data);
+		if ($resp->getStatus() == 200) {
+			$respJson = $resp->getAsJson();
+			$version = $resp->getAllHeaders()['etag'];
+			$object->version = $version;
+			return $object;
+		} else if ($resp->getStatus() == 201) {
+			$version = $resp->getAllHeaders()['etag'];
+			$object->version = $version;
+			return $object;
+		}
+		throw new CloudException($resp->getStatus(), $resp->getAsJson());
+	}
+	
 	public function delete(KiiObject $object) {
 		$c = $this->context;
 		$url = $c->getServerUrl().
