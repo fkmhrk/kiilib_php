@@ -28,7 +28,8 @@ class KiiObjectAPI implements ObjectAPI {
 			throw new CloudException($resp->getStatus(), $resp->getAsJson());
 		}
 		$respJson = $resp->getAsJson();
-		$version = $resp->getAllHeaders()['etag'];
+		$respHeaders = $resp->getAllHeaders();
+		$version = $respHeaders['etag'];
 		$id = $respJson['objectID'];
 
 		$kiiobj = new KiiObject($bucket, $id, $data);
@@ -51,11 +52,13 @@ class KiiObjectAPI implements ObjectAPI {
 		$resp = $client->sendJson($object->data);
 		if ($resp->getStatus() == 200) {
 			$respJson = $resp->getAsJson();
-			$version = $resp->getAllHeaders()['etag'];
+			$respHeaders = $resp->getAllHeaders();
+			$version = $respHeaders['etag'];
 			$object->version = $version;
 			return $object;
 		} else if ($resp->getStatus() == 201) {
-			$version = $resp->getAllHeaders()['etag'];
+			$respHeaders = $resp->getAllHeaders();
+			$version = $respHeaders['etag'];
 			$object->version = $version;
 			return $object;
 		}
@@ -78,11 +81,13 @@ class KiiObjectAPI implements ObjectAPI {
 		$resp = $client->sendJson($object->data);
 		if ($resp->getStatus() == 200) {
 			$respJson = $resp->getAsJson();
-			$version = $resp->getAllHeaders()['etag'];
+			$respHeaders = $resp->getAllHeaders();
+			$version = $respHeaders['etag'];			
 			$object->version = $version;
 			return $object;
 		} else if ($resp->getStatus() == 201) {
-			$version = $resp->getAllHeaders()['etag'];
+			$respHeaders = $resp->getAllHeaders();
+			$version = $respHeaders['etag'];						
 			$object->version = $version;
 			return $object;
 		}
