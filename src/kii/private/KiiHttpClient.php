@@ -9,6 +9,7 @@ class KiiHttpClient implements HttpClient {
 	
 	public function __construct() {
 		$this->req = new HTTP_Request2();
+		$this->req->setConfig('ssl_verify_peer', false);
 	}
 	
 	public function setUrl($url) {
