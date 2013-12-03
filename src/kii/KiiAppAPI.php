@@ -3,6 +3,7 @@ require_once (dirname(__FILE__) . '/../AppAPI.php');
 require_once (dirname(__FILE__) . '/../KiiContext.php');
 require_once (dirname(__FILE__) . '/../CloudException.php');
 require_once (dirname(__FILE__) . '/../KiiUser.php');
+require_once (dirname(__FILE__) . '/../KiiApp.php');
 
 require_once (dirname(__FILE__) . '/KiiUserAPI.php');
 require_once (dirname(__FILE__) . '/KiiGroupAPI.php');
