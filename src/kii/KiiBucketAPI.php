@@ -49,5 +49,22 @@ class KiiBucketAPI implements BucketAPI {
 		
 		return $result;
 	}
+
+	public function delete(KiiBucket $bucket) {
+		$c = $this->context;
+		$url = $c->getServerUrl().
+			'/apps/'. $c->getAppId().
+			$bucket->getPath();
+
+		$client = $c->getNewClient();
+		$client->setUrl($url);
+		$client->setMethod(HttpClient::HTTP_DELETE);
+		$client->setKiiHeader($c, TRUE);
+
+		$resp = $client->send();
+		if ($resp->getStatus() != 204) {
+			throw new CloudException($resp->getStatus(), $resp->getAsJson());
+		}
+	}
 }
 ?>
