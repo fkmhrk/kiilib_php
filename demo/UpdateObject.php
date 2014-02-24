@@ -21,6 +21,13 @@ try {
 	$updated = $api->update($obj);
 	print_r($updated);
 
+    // update patch
+    $patch = array(
+                   'level' => 'easy'
+                   );
+    $updated = $api->updatePatch($obj, $patch);
+	print_r($updated);
+
 	// update IfUnmodified
 	echo "Update If object is unmodified on the cloud\n";
 	$updated->data['score'] = 200;
