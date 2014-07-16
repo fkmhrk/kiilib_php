@@ -11,7 +11,8 @@ PHP用Kii Cloudライブラリです。Kii Cloudに対するAPIと、データ�
 
 Getting started
 ===============
-I'll write samples here...
+
+This library will work on PHP 5.3+ and HTTP_Request2. Please install PEAR/HTTP_Request2
 
 
 APIs
