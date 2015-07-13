@@ -15,6 +15,8 @@ interface ObjectAPI {
     public function updateBody(KiiObject $object, $contentType, $data);
 
     public function downloadBody(KiiObject $object, $fp);
+
+    public function publish(KiiObject $object);
 }
 
 ?>
