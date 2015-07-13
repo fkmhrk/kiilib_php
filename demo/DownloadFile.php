@@ -27,6 +27,10 @@ try {
 	$fp2 = fopen(dirname(__FILE__). '/downloadImage.jpg', 'wb');
 	$api->downloadBody($obj, $fp2);
 	echo "Download is done! Please see downloadImage.jpg\n";
+
+    // publish file
+    $url = $api->publish($obj);
+	echo "publish URL=". $url. "\n";
 	
 } catch (CloudException $e) {
 	echo 'failed to call Kii API '. $e->getStatus();

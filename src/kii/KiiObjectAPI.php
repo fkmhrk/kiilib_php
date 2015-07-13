@@ -187,6 +187,27 @@ class KiiObjectAPI implements ObjectAPI {
         }
         throw new CloudException($resp->getStatus(), $resp->getAsJson());
     }
+
+    public function publish(KiiObject $object) {
+        $c = $this->context;
+        $url = $c->getServerUrl().
+            '/apps/'. $c->getAppId().
+            $object->getPath().
+            '/body/publish';
+
+        $client = $c->getNewClient();
+        $client->setUrl($url);
+        $client->setMethod(HttpClient::HTTP_POST);
+        $client->setKiiHeader($c, TRUE);
+        $client->setContentType('application/vnd.kii.ObjectBodyPublicationRequest+json');
+
+        $resp = $client->sendJson(null);
+        if ($resp->getStatus() == 201) {
+            $respJson = $resp->getAsJson();
+            return $respJson['url'];
+        }
+        throw new CloudException($resp->getStatus(), $resp->getAsJson());        
+    }
 }
 
 ?>
