@@ -3,14 +3,16 @@ require_once (dirname(__FILE__) . '/../../src/kii/KiiUserAPI.php');
 require_once (dirname(__FILE__) . '/../../src/KiiTopic.php');
 require_once (dirname(__FILE__) . '/../mock/MockClientFactory.php');
 
-class TestKiiUserAPI extends PHPUnit_Framework_TestCase{
+use PHPUnit\Framework\TestCase;
+
+class TestKiiUserAPI extends TestCase {
 	private $APP_ID = 'appId';
 	private $APP_KEY = 'appKey';
 
 	private $factory;
 	private $context;
 
-	public function __construct() {
+	public function setUp() {
 		$this->factory = new MockClientFactory();
 
 		$this->context = new KiiContext($this->APP_ID, $this->APP_KEY, KiiContext::SITE_US);

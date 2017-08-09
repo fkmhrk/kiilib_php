@@ -2,7 +2,9 @@
 require_once (dirname(__FILE__) . '/../src/KiiCondition.php');
 require_once (dirname(__FILE__) . '/../src/KiiClause.php');
 
-class TestKiiCondition extends PHPUnit_Framework_TestCase{
+use PHPUnit\Framework\TestCase;
+
+class TestKiiCondition extends TestCase {
 	public function test_0000_all() {
 		$condition = new KiiCondition(KiiClause::all());
 		

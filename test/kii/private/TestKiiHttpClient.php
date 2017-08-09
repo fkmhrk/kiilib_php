@@ -1,7 +1,9 @@
 <?php
 require '../../../src/kii/private/KiiHttpClient.php';
 
-class TestKiiHttpClient extends PHPUnit_Framework_TestCase{
+use PHPUnit\Framework\TestCase;
+
+class TestKiiHttpClient extends TestCase {
 	public function test_0000_get_request() {
 		$client = new KiiHttpClient();
 		$client->setUrl('http://example.com/');

@@ -2,23 +2,27 @@
 require_once (dirname(__FILE__) . '/../../src/kii/KiiAppAPI.php');
 require_once (dirname(__FILE__) . '/../mock/MockClientFactory.php');
 
-class TestKiiAppAPI extends PHPUnit_Framework_TestCase{
+use PHPUnit\Framework\TestCase;
+
+final class TestKiiAppAPI extends TestCase{
 	private $APP_ID = 'appId';
 	private $APP_KEY = 'appKey';
 
 	private $factory;
 	private $context;
 
-	public function __construct() {
+	public function setUp() {
 		$this->factory = new MockClientFactory();
 
 		$this->context = new KiiContext($this->APP_ID, $this->APP_KEY, KiiContext::SITE_US);
 		$this->context->setClientFactory($this->factory);		
 	}
-	
-	public function test_0000_login_ok() {
+
+	public function test_0000_login_ok() : void 
+    {
 		$api = new KiiAppAPI($this->context);
-		
+
+
 		// set mock
 		$respBody = '{"id":"ff43674e-b62c-4933-86cc-fd47bb89b398",'.
 			'"access_token":"a8d808e6-495d-4968-9c54-27979369c9c8",'.
