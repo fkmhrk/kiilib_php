@@ -2,11 +2,13 @@
 class KiiGroup {
 	private $id;
 
-	public function __construct($id) {
+	public function __construct(string $id)
+    {
 		$this->id = $id;
 	}
 
-	public function getPath() {
+	public function getPath() : string
+    {
 		return '/groups/'. $this->id;
 	}
 }

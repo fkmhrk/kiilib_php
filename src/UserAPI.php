@@ -6,15 +6,15 @@ interface UserAPI {
 
 	public function getUser(KiiUser $user);
 	
-	public function findByUsername($username);
+	public function findByUsername(string $username);
 
-	public function findByEmail($email);
+	public function findByEmail(string $email);
 
-	public function findByPhone($phone);
+	public function findByPhone(string $phone);
 	
-	public function installDevice(KiiUser $user, $os, $token, $development = FALSE);
+	public function installDevice(KiiUser $user, int $os, string $token, bool $development = FALSE);
 
-	public function uninstallDevice($os, $token);
+	public function uninstallDevice(int $os, string $token);
 
 	public function subscribe(KiiUser $user, $target);
 }

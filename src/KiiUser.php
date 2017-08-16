@@ -3,15 +3,18 @@ class KiiUser {
 	private $id;
 	public $data;
 
-	public function __construct($id) {
+	public function __construct(string $id)
+    {
 		$this->id = $id;
 	}
 
-	public function getId() {
+	public function getId() : string
+    {
 		return $this->id;
 	}
 	
-	public function getPath() {
+	public function getPath() : string
+    {
 		return '/users/' . $this->id;
 	}
 }

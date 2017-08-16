@@ -16,7 +16,8 @@ class KiiTopicMessage {
 	public $gcm;
 	public $apns;	
 
-	public function __construct() {
+	public function __construct()
+    {
 		$this->data = array();
 		$this->sendToDevelopment = TRUE;
 		$this->sendToProduction = TRUE;
@@ -32,42 +33,53 @@ class KiiTopicMessage {
 		$this->apns = new KiiAPNsMessage();
 	}
 
-	public function setSendToDevelopment($value) {
-		$this->sendToDevelopment =$value;
+	public function setSendToDevelopment(bool $value) 
+    {
+		$this->sendToDevelopment = $value;
 	}
 
-	public function setSendToProduction($value) {
+	public function setSendToProduction(bool $value)
+    {
 		$this->sendToProduction = $value;
 	}
 
-	public function setPushMessageType($value) {
+	public function setPushMessageType(string $value)
+    {
 		$this->pushMessageType = $value;
 	}
 
-	public function setSendAppID($value) {
+	public function setSendAppID(bool $value)
+    {
 		$this->sendAppID =$value;
 	}
 
-	public function setSendSender($value) {
+	public function setSendSender(bool $value)
+    {
 		$this->sendSender = $value;
 	}
 
-	public function setSendWhen($value) {
+	public function setSendWhen(bool $value)
+    {
 		$this->sendWhen = $value;
 	}
-	public function setSSendOrigin($value) {
+    
+	public function setSendOrigin(bool $value)
+    {
 		$this->sendOrigin = $value;
 	}
 
-	public function setSendObjectScope($value) {
+	public function setSendObjectScope(bool $value)
+    {
 		$this->sendObjectScope = $value;
 	}
 
-	public function setSendTopicID($value) {
+	public function setSendTopicID(bool $value)
+    {
 		$this->sendTopicID = $value;
 	}
 
-	public function toJson() {
+	public function toJson() : array
+    {
 		$json = array(
 					  "sendToDevelopment" => $this->sendToDevelopment,
 					  "sendToProduction" => $this->sendToProduction,

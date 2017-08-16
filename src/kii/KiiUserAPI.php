@@ -6,11 +6,13 @@ require_once (dirname(__FILE__) . '/../CloudException.php');
 class KiiUserAPI implements UserAPI {
 	private $context;
 
-	public function __construct($context) {
+	public function __construct(KiiContext $context)
+    {
 		$this->context = $context;
 	}
 	
-	public function getUser(KiiUser $user) {
+	public function getUser(KiiUser $user)
+    {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -18,7 +20,8 @@ class KiiUserAPI implements UserAPI {
 		return $this->execGet($url);
 	}
 
-	public function findByUsername($username) {
+	public function findByUsername(string $username)
+    {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -26,7 +29,8 @@ class KiiUserAPI implements UserAPI {
 		return $this->execGet($url);
 	}
 
-	public function findByEmail($email) {
+	public function findByEmail(string $email)
+    {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -34,7 +38,8 @@ class KiiUserAPI implements UserAPI {
 		return $this->execGet($url);
 	}
 
-	public function findByPhone($phone) {
+	public function findByPhone(string $phone)
+    {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -42,7 +47,7 @@ class KiiUserAPI implements UserAPI {
 		return $this->execGet($url);
 	}
 
-	private function execGet($url) {
+	private function execGet(string $url) {
 		$c = $this->context;
 		
 		$client = $c->getNewClient();
@@ -63,7 +68,8 @@ class KiiUserAPI implements UserAPI {
 		return $info;		
 	}
 	
-	public function installDevice(KiiUser $user, $os, $token, $development = FALSE) {
+	public function installDevice(KiiUser $user, int $os, string $token, bool $development = FALSE)
+    {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -91,7 +97,8 @@ class KiiUserAPI implements UserAPI {
 		return $respJson['installationID'];
 	}
 
-	public function uninstallDevice($os, $token) {
+	public function uninstallDevice(int $os, string $token)
+    {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().
@@ -109,7 +116,8 @@ class KiiUserAPI implements UserAPI {
 		}
 	}
 	
-	private function toDeviceType($os) {
+	private function toDeviceType(int $os) : string
+    {
 		switch ($os) {
 		case UserAPI::OS_ANDROID: return 'ANDROID';
 		case UserAPI::OS_IOS: return 'IOS';
@@ -117,7 +125,8 @@ class KiiUserAPI implements UserAPI {
 		}
 	}
 
-	public function subscribe(KiiUser $user, $target) {
+	public function subscribe(KiiUser $user, $target)
+    {
 		$c = $this->context;
 		$url = $c->getServerUrl().
 			'/apps/'. $c->getAppId().

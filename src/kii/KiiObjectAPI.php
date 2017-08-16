@@ -6,11 +6,13 @@ require_once (dirname(__FILE__) . '/../CloudException.php');
 class KiiObjectAPI implements ObjectAPI {
     private $context;
 
-    public function __construct($context) {
+    public function __construct(KiiContext $context)
+    {
         $this->context = $context;
     }
     
-    public function create(KiiBucket $bucket, $data) {
+    public function create(KiiBucket $bucket, array $data)
+    {
         $c = $this->context;
         $url = $c->getServerUrl().
             '/apps/'. $c->getAppId().
@@ -65,7 +67,8 @@ class KiiObjectAPI implements ObjectAPI {
         throw new CloudException($resp->getStatus(), $resp->getAsJson());
     }
 
-    public function updatePatch(KiiObject $object, $patch) {
+    public function updatePatch(KiiObject $object, array $patch)
+    {
         $c = $this->context;
         $url = $c->getServerUrl().
             '/apps/'. $c->getAppId().
@@ -98,7 +101,8 @@ class KiiObjectAPI implements ObjectAPI {
         throw new CloudException($resp->getStatus(), $resp->getAsJson());
     }
 
-    public function updateIfUnmodified(KiiObject $object) {
+    public function updateIfUnmodified(KiiObject $object)
+    {
         $c = $this->context;
         $url = $c->getServerUrl().
             '/apps/'. $c->getAppId().
@@ -127,7 +131,8 @@ class KiiObjectAPI implements ObjectAPI {
         throw new CloudException($resp->getStatus(), $resp->getAsJson());
     }
     
-    public function delete(KiiObject $object) {
+    public function delete(KiiObject $object)
+    {
         $c = $this->context;
         $url = $c->getServerUrl().
             '/apps/'. $c->getAppId().
@@ -144,7 +149,8 @@ class KiiObjectAPI implements ObjectAPI {
         }
     }
 
-    public function updateBody(KiiObject $object, $contentType, $data) {    
+    public function updateBody(KiiObject $object, string $contentType, $data)
+    {    
         $c = $this->context;
         $url = $c->getServerUrl().
             '/apps/'. $c->getAppId().
