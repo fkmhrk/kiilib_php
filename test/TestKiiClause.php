@@ -1,7 +1,9 @@
 <?php
 require_once (dirname(__FILE__) . '/../src/KiiClause.php');
 
-class TestKiiClause extends PHPUnit_Framework_TestCase{
+use PHPUnit\Framework\TestCase;
+
+class TestKiiClause extends TestCase {
 	private function assertAllClause($clause) {
 		$this->assertEquals(1, count($clause));
 		$this->assertEquals('all', $clause['type']);

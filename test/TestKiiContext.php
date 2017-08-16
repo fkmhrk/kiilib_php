@@ -1,7 +1,9 @@
 <?php
 require '../src/KiiContext.php';
 
-class TestKiiContext extends PHPUnit_Framework_TestCase{
+use PHPUnit\Framework\TestCase;
+
+class TestKiiContext extends TestCase {
 	public function test_0000_construct() {
 		$appId = 'app0000';
 		$appKey = 'key0000';
