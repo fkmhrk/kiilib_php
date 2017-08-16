@@ -13,38 +13,46 @@ class KiiContext {
 
 	private $clientFactory;
 
-	public function __construct($appId, $appKey, $serverUrl) {
+	public function __construct(string $appId, string $appKey, string $serverUrl)
+    {
 		$this->appId = $appId;
 		$this->appKey = $appKey;
 		$this->serverUrl = $serverUrl;
 		$this->clientFactory = new KiiHttpClientFactory();
 	}
 
-	public function getAppId() {
+	public function getAppId() : string
+    {
 		return $this->appId;
 	}
 
-	public function getAppKey() {
+	public function getAppKey() : string
+    {
 		return $this->appKey;
 	}
 
-	public function getServerUrl() {
+	public function getServerUrl() : string
+    {
 		return $this->serverUrl;
 	}
 
-	public function setAccessToken($token) {
+	public function setAccessToken(string $token)
+    {
 		$this->token = $token;
 	}
 
-	public function getAccessToken() {
+	public function getAccessToken() : string
+    {
 		return $this->token;
 	}
 
-	public function setClientFactory($factory) {
+	public function setClientFactory(HttpClientFactory $factory)
+    {
 		$this->clientFactory = $factory;
 	}
 
-	public function getNewClient() {
+	public function getNewClient() : HttpClient
+    {
 		return $this->clientFactory->newClient();
 	}
 }
