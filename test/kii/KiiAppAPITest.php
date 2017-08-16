@@ -48,7 +48,7 @@ final class TestKiiAppAPI extends TestCase{
 		$api = new KiiAppAPI($this->context);
 		
 		// set mock
-		$respBody = '{"errorCode":"invalid_grant","'.
+		$respBody = '{"errorCode":"invalid_grant",'.
 			'"error_description":"The user was not found or a wrong password was provided",'.
 			'"error":"invalid_grant"}';
 		$this->factory->newClient()->
@@ -91,7 +91,7 @@ final class TestKiiAppAPI extends TestCase{
 		$api = new KiiAppAPI($this->context);
 		
 		// set mock
-		$respBody = '{"errorCode":"invalid_grant","'.
+		$respBody = '{"errorCode":"invalid_grant",'.
 			'"error_description":"The user was not found or a wrong password was provided",'.
 			'"error":"invalid_grant"}';
 		$this->factory->newClient()->

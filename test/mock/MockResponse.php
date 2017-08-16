@@ -20,7 +20,7 @@ class MockResponse implements HttpResponse {
 		return $this->headers;
 	}
 
-	public function getAsJson() {
+	public function getAsJson() : array {
 		return json_decode($this->body, TRUE);
 	}
 }

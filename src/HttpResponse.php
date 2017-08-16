@@ -4,6 +4,6 @@ interface HttpResponse {
 
 	public function getAllHeaders();
 			
-	public function getAsJson();
+	public function getAsJson() : array ;
 }
 ?>
