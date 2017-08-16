@@ -30,7 +30,8 @@ class KiiAppAPI implements AppAPI {
 		$this->topicAPI = new KiiTopicAPI($context);
 	}
 	
-	public function login($userIdentifier, $password) {
+	public function login(string $userIdentifier, string $password)
+    {
 		$body = array(
 					  'username' => $userIdentifier,
 					  'password' => $password
@@ -38,7 +39,8 @@ class KiiAppAPI implements AppAPI {
 		return $this->execLogin($body);
 	}
 
-	public function loginAsAdmin($clientId, $clientSecret) {
+	public function loginAsAdmin(string $clientId, string $clientSecret) 
+    {
 		$body = array(
 					  'client_id' => $clientId,
 					  'client_secret' => $clientSecret
@@ -46,7 +48,7 @@ class KiiAppAPI implements AppAPI {
 		return $this->execLogin($body);
 	}
 
-	private function execLogin($body) {
+	private function execLogin(array $body) {
 		$c = $this->context;
 		$url = $c->getServerUrl(). '/oauth2/token';
 		
@@ -70,26 +72,32 @@ class KiiAppAPI implements AppAPI {
 	}
 	
 	// APIs
-	public function userAPI() {
+	public function userAPI() : UserAPI 
+    {
 		return $this->userAPI;
 	}
 
-	public function groupAPI() {
+	public function groupAPI() : GroupAPI 
+    {
 		return $this->groupAPI;
 	}
 	
-	public function bucketAPI() {
+	public function bucketAPI() : BucketAPI 
+    {
 		return $this->bucketAPI;
 	}
 	
-	public function objectAPI(){
+	public function objectAPI() : ObjectAPI 
+    {
 		return $this->objectAPI;
 	}
 	
-	public function aclAPI() {
+	public function aclAPI() : ACLAPI 
+    {
 	}
 
-	public function topicAPI() {
+	public function topicAPI() : TopicAPI 
+    {
 		return $this->topicAPI;
 	}
 }

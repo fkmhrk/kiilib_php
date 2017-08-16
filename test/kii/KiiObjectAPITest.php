@@ -101,6 +101,7 @@ class TestKiiObjectAPI extends TestCase {
 					  "score" => 120
 					  );		
 		$object = new KiiObject($bucket, $objectId, $data);
+        $object->version = '1';
 		// update field
 		$object->data['score'] = 255;
 		
@@ -201,7 +202,7 @@ class TestKiiObjectAPI extends TestCase {
 		rewind($fp);
 		
 		// set mock
-		$respBody = ''; 
+		$respBody = '{}'; 
 		$this->factory->newClient()->
 			addToSend(new MockResponse(200, null, $respBody));
 		$updated = $api->updateBody($object, 'text/plain', $fp);

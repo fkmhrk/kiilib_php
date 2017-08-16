@@ -1,13 +1,13 @@
 <?php
 interface AppAPI {
-	public function login($userIdentifier, $password);
-	public function loginAsAdmin($clientId, $clientSecret);
+	public function login(string $userIdentifier, string $password);
+	public function loginAsAdmin(string $clientId, string $clientSecret);
 	// APIs
-	public function userAPI();
-	public function groupAPI();
-	public function bucketAPI();
-	public function objectAPI();
-	public function aclAPI();
-	public function topicAPI();
+	public function userAPI() : UserAPI;
+	public function groupAPI() : GroupAPI;
+	public function bucketAPI() : BucketAPI ;
+	public function objectAPI() : ObjectAPI;
+	public function aclAPI() : ACLAPI;
+	public function topicAPI() : TopicAPI;
 }
 ?>

@@ -6,21 +6,24 @@ class MockResponse implements HttpResponse {
 	private $headers;
 	private $body;
 
-	public function __construct($status, $headers, $body) {
+	public function __construct($status, $headers, $body)
+    {
 		$this->status = $status;
 		$this->headers = $headers;
 		$this->body = $body;
 	}
 	
-	public function getStatus() {
+	public function getStatus() : int
+    {
 		return $this->status;
 	}
 
-	public function getAllHeaders() {
+	public function getAllHeaders() : array
+    {
 		return $this->headers;
 	}
 
-	public function getAsJson() {
+	public function getAsJson() : array {
 		return json_decode($this->body, TRUE);
 	}
 }

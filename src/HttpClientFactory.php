@@ -1,5 +1,6 @@
 <?php
+
 interface HttpClientFactory {
-	public function newClient();
+	public function newClient() : HttpClient;
 }
 ?>

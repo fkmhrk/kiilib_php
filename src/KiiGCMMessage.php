@@ -4,16 +4,19 @@ class KiiGCMMessage {
 	public $data;
 	private $enable;
 	
-	public function __construct() {
+	public function __construct()
+    {
 		$this->data = array();
 		$this->enable = TRUE;
 	}
 
-	public function setEnabled($value) {
+	public function setEnabled(bool $value)
+    {
 		$this->enable = $value;
 	}
 
-	public function toJson() {
+	public function toJson() : array
+    {
 		$json = array(
 					  "enabled" => $this->enable
 					  );

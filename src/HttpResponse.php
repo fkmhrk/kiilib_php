@@ -1,9 +1,9 @@
 <?php
 interface HttpResponse {
-	public function getStatus();
+	public function getStatus() : int;
 
-	public function getAllHeaders();
+	public function getAllHeaders() : array;
 			
-	public function getAsJson();
+	public function getAsJson() : array ;
 }
 ?>

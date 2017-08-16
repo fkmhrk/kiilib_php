@@ -13,19 +13,21 @@ class KiiAPNsMessage {
         $this->badge = 0;
     }
 
-    public function setEnabled($value) {
+    public function setEnabled(bool $value)
+    {
         $this->enable = $value;
     }
 
-    public function setBadge($value) {
+    public function setBadge(int $value)
+    {
         $this->badge = $value;
     }
 
-    public function setBody($value) {
+    public function setBody(array $value) {
         $this->alert['body'] = $value;
     }
 
-    public function toJson() {
+    public function toJson() : array {
         $json = array(
                       "enabled" => $this->enable,
                       'badge' => $this->badge

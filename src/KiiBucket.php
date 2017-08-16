@@ -4,16 +4,19 @@ class KiiBucket {
 	private $owner;
 	private $name;
 
-	public function __construct($owner, $name) {
+	public function __construct($owner, string $name)
+    {
 		$this->owner = $owner;
 		$this->name = $name;
 	}
 
-	public function getName() {
+	public function getName() : string
+    {
 		return $this->name;
 	}
 
-	public function getPath() {
+	public function getPath() : string
+    {
 		return $this->owner->getPath().
 			'/buckets/'. $this->name;
 	}

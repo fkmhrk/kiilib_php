@@ -2,15 +2,18 @@
 class KiiClause {
 	private $clause;
 	
-	private function __construct($type) {
+	private function __construct(string $type)
+    {
 		$this->clause = array('type' => $type);
 	}
 
-	public static function all() {
+	public static function all() : KiiClause
+    {
 		return new KiiClause('all');
 	}
 
-	public static function equals($field, $value) {
+	public static function equals(string $field, $value) : KiiClause
+    {
 		$c = new KiiClause('eq');
 		$c->clause['field'] = $field;
 		$c->clause['value'] = $value;
@@ -18,7 +21,9 @@ class KiiClause {
 		return $c;		
 	}
 	
-	public static function greaterThan($field, $value, $include) {
+	public static function greaterThan(string $field, $value, bool $include) 
+        : KiiClause
+    {
 		$c = new KiiClause('range');
 		$c->clause['field'] = $field;
 		$c->clause['lowerLimit'] = $value;
@@ -27,7 +32,9 @@ class KiiClause {
 		return $c;		
 	}
 
-	public static function lessThan($field, $value, $include) {
+	public static function lessThan(string $field, $value, bool $include)
+        : KiiClause
+    {
 		$c = new KiiClause('range');
 		$c->clause['field'] = $field;
 		$c->clause['upperLimit'] = $value;
@@ -36,8 +43,9 @@ class KiiClause {
 		return $c;		
 	}
 
-	public static function range($field, $fromValue, $fromInclude,
-								 $toValue, $toInclude) {
+	public static function range(string $field, $fromValue, bool $fromInclude,
+								 $toValue, bool $toInclude) : KiiClause
+    {
 		$c = new KiiClause('range');
 		$c->clause['field'] = $field;
 		$c->clause['lowerLimit'] = $fromValue;
@@ -48,7 +56,8 @@ class KiiClause {
 		return $c;		
 	}
 	
-	public static function inClause($field, array $values) {
+	public static function inClause(string $field, array $values) : KiiClause 
+    {
 		$c = new KiiClause('in');
 		$c->clause['field'] = $field;
 		$c->clause['values'] = $values;
@@ -56,14 +65,16 @@ class KiiClause {
 		return $c;		
 	}
 	
-	public static function not(KiiClause $clause) {
+	public static function not(KiiClause $clause) : KiiClause
+    {
 		$c = new KiiClause('not');
 		$c->clause['clause'] = $clause->toJson();
 		
 		return $c;		
 	}
 	
-	public static function andClause() {
+	public static function andClause() : KiiClause
+    {
 		$c = new KiiClause('and');
 		$array = KiiClause::toFlatArray(func_get_args());
 		$c->clause['clauses'] = $array;
@@ -71,7 +82,8 @@ class KiiClause {
 		return $c;
 	}
 
-	public static function orClause() {
+	public static function orClause() : KiiClause 
+    {
 		$c = new KiiClause('or');
 		$array = KiiClause::toFlatArray(func_get_args());
 		$c->clause['clauses'] = $array;
@@ -79,7 +91,8 @@ class KiiClause {
 		return $c;		
 	}
 	
-	private static function toFlatArray($args) {
+	private static function toFlatArray(array $args) : array 
+    {
 		$array = array();
 		foreach ($args as $arg) {
 			if (is_array($arg)) {
@@ -93,7 +106,8 @@ class KiiClause {
 		return $array;
 	}
 
-	public function toJson() {
+	public function toJson() : array
+    {
 		return $this->clause;
 	}
 }
