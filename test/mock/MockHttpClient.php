@@ -7,53 +7,65 @@ class MockHttpClient implements HttpClient {
 	private $sendQueue;
 	private $downloadQueue;
 	
-	public function __construct() {
+	public function __construct() 
+    {
 		$this->urlArgs = array();
 		$this->sendJsonArgs = array();
 		$this->sendQueue = array();
 		$this->downloadQueue = array();
 	}
 	
-	public function setUrl($url) {
+	public function setUrl(string $url) 
+    {
 		array_push($this->urlArgs, $url);
 	}
 
-	public function setMethod($method) {
+	public function setMethod(int $method) 
+    {
 	}
 	
-	public function setContentType($value) {
+	public function setContentType(string $value) 
+    {
 	}
 
-	public function setHeader($key, $value) {
+	public function setHeader(string $key, string $value) 
+    {
 	}
 
-	public function setKiiHeader($context, $authRequired) {
+	public function setKiiHeader(KiiContext $context, bool $authRequired) 
+    {
 	}
 
-	public function sendFile($fp) {
+	public function sendFile($fp) 
+    {
 		return array_pop($this->sendQueue);		
 	}
 
-	public function sendForDownload($fp) {
+	public function sendForDownload($fp) 
+    {
 		$text = array_pop($this->downloadQueue);
 		fwrite($fp, $text);
 		return $this->send();
 	}
 	
-	public function sendJson($json) {
+	public function sendJson(array $json) 
+    {
 		array_push($this->sendJsonArgs, $json);
 		return array_pop($this->sendQueue);
 	}
 
-	public function send() {
+	public function send() 
+    {
 		return array_pop($this->sendQueue);
 	}
 
-	public function addToSend($value) {
+	public function addToSend($value) 
+    {
 		array_push($this->sendQueue, $value);
 	}
 	
-	public function addToSendForDownload($value) {
+	public function addToSendForDownload($value) 
+    {
 		array_push($this->downloadQueue, $value);
 	}	
 }

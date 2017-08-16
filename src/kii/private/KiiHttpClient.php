@@ -12,12 +12,12 @@ class KiiHttpClient implements HttpClient {
 		$this->req->setConfig('ssl_verify_peer', false);
 	}
 	
-	public function setUrl($url) {
+	public function setUrl(string $url) {
 		$this->req->setUrl($url);
 		return $this;
 	}
 
-	public function setMethod($method) {
+	public function setMethod(int $method) {
 		switch ($method) {
 		case HttpClient::HTTP_GET:
 			$this->req->setMethod(HTTP_Request2::METHOD_GET);
@@ -34,15 +34,15 @@ class KiiHttpClient implements HttpClient {
 		}		
 	}
 	
-	public function setContentType($value) {
+	public function setContentType(string $value) {
 		$this->setHeader('content-type', $value);
 	}
 
-	public function setHeader($key, $value) {
+	public function setHeader(string $key, string $value) {
 		$this->req->setHeader($key, $value);
 	}
 
-	public function setKiiHeader($context, $authRequired) {
+	public function setKiiHeader(KiiContext $context, bool $authRequired) {
 		$this->setHeader('x-kii-appid', $context->getAppId());
 		$this->setHeader('x-kii-appkey', $context->getAppKey());
 		if ($authRequired) {
@@ -61,7 +61,7 @@ class KiiHttpClient implements HttpClient {
 		return $this->send();
 	}
 		
-	public function sendJson($json) {
+	public function sendJson(array $json) {
 		$body = json_encode($json);
 		$this->req->setBody($body);
 		return $this->send();

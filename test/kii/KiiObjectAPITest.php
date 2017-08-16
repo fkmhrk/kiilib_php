@@ -101,6 +101,7 @@ class TestKiiObjectAPI extends TestCase {
 					  "score" => 120
 					  );		
 		$object = new KiiObject($bucket, $objectId, $data);
+        $object->version = '1';
 		// update field
 		$object->data['score'] = 255;
 		
