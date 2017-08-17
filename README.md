@@ -12,7 +12,7 @@ PHP用Kii Cloudライブラリです。Kii Cloudに対するAPIと、データ�
 Getting started
 ===============
 
-This library will work on PHP 5.3+ and HTTP_Request2. Please install PEAR/HTTP_Request2
+This library will work on PHP 7.1+ and HTTP_Request2. Please install PEAR/HTTP_Request2
 
 
 APIs
